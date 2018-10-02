@@ -1,0 +1,76 @@
+﻿@model ActivityDetailsVM
+
+<article id="RoomTypesStatsCard" class="card-item-20">
+    <span id="card-opener-activity" class="card-opener" style="float:right;"><i class="material-icons">keyboard_arrow_up</i></span>
+    <span class="card-item-title text-center">Activity</span>
+    <section id="ActivityStatsCardContent" class="card-item-content-hidden">
+        <hr />
+        <p>Airbnb guests may leave a review after their stay, and these can be used as an indicator of airbnb activity.</p>
+        <p>The minimum stay, price and number of reviews have been used to estimate the <b>occupancy rate</b>, the number of <b>nights per year</b> and the <b>income per month</b> for each listing.</p>
+        <p>How does the income from Airbnb compare to a long-term lease?</p>
+        <p>Do the number of nights booked per year make it impossible for a listing to be used for residential housing?</p>
+        <p>And what is renting to a tourist full-time rather than a resident doing to our neighbourhoods and cities?</p>
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <div class="row">
+                    <div class="col-sm-12 text-center stat-value">
+                        @Model.NrOfReviews
+                    </div>
+                    <div class="col-sm-12 text-center stat-value-lable">
+                        Total nr. of reviews
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="row">
+                    <div class="col-sm-12 text-center stat-value">
+                        @Model.AvgMonthlyReviews
+                    </div>
+                    <div class="col-sm-12 text-center stat-value-lable">
+                        Avg. nr. of reviews per host per month
+                    </div>
+                </div>
+            </div>
+            <br /><br /><br />
+            <div class="col-sm-12 col-md-6">
+                <div class="row">
+                    <div class="col-sm-12 text-center stat-value">
+                        €@Model.AvgPricePerNight
+                    </div>
+                    <div class="col-sm-12 text-center stat-value-lable">
+                        Avg. price per night
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="row">
+                    <div class="col-sm-12 text-center stat-value">
+                        €@Model.AvgMonthlyIncome
+                    </div>
+                    <div class="col-sm-12 text-center stat-value-lable">
+                        Avg. monthly income per host
+                    </div>
+                </div>
+            </div>
+            <br /><br /><br />
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-12 text-center stat-value">
+                        @(Model.AvgNightsAvailableEachMonth) <small>nights per month</small>
+                    </div>
+                    <div class="col-sm-12 text-center stat-value-lable">
+                        Avg. availability per host
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</article>
+
+<script>
+    $(document).ready(function () {
+        $("#card-opener-activity").click(function () {
+            $("#ActivityStatsCardContent").fadeToggle()
+        });
+    });
+</script>

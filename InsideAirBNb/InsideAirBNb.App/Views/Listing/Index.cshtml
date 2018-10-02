@@ -1,0 +1,53 @@
+﻿@model ListingOverviewVM
+@{
+    ViewData["Title"] = "Listings in Amsterdam";
+}
+
+<section class="main-content">
+    <div class="container-fluid">
+        <h1 class="text-airbnb">AirBNB listings in Amsterdam</h1>
+        <div class="row">
+            <div style="margin:auto">
+                @if (Model.HasPreviousPage)
+                {
+                    <a asp-controller="Listing" asp-action="Index" asp-route-page="@(Model.PageIndex-1)" class="btn btn-light">Previous</a>
+                }
+                <span>
+                    Page @Model.PageIndex of @Model.TotalPages
+                </span>
+                @if (Model.HasNextPage)
+                {
+                    <a asp-controller="Listing" asp-action="Index" asp-route-page="@(Model.PageIndex+1)" class="btn btn-light">Next</a>
+                }
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var x in Model.Listings)
+            {
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    <a class="card-item" style="margin:20px;" asp-controller="Listing" asp-action="Details" asp-route-id="@x.Id">
+                        <img class="card-item-img" src="@x.PictureUrl" alt="Card image">
+                        <div class="card-body">
+                            <h4 class="card-title text-airbnb">@x.Name</h4>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+        <div class="row">
+            <div style="margin:auto">
+                @if (Model.HasPreviousPage)
+                {
+                    <a asp-controller="Listing" asp-action="Index" asp-route-page="@(Model.PageIndex-1)" class="btn btn-light">Previous</a>
+                }
+                <span>
+                    Page @Model.PageIndex of @Model.TotalPages
+                </span>
+                @if (Model.HasNextPage)
+                {
+                    <a asp-controller="Listing" asp-action="Index" asp-route-page="@(Model.PageIndex+1)" class="btn btn-light">Next</a>
+                }
+            </div>
+        </div>
+    </div>
+</section>

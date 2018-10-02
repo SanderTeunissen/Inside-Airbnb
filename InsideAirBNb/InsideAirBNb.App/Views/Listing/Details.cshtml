@@ -1,0 +1,266 @@
+﻿@model Listing
+@{
+    ViewData["Title"] = string.Format("Listing {0} Details", Model.Id);
+
+    var availability = from a in Model.Calendar
+                       where a.Available.Equals("t")
+                       orderby a.Date
+                       group a by a.Date.ToString("MMMM") into g
+                       select new { Month = g.Key, DaysAvailable = g.Count() };
+
+    var availableInCalendar = Model.Calendar.Where(c => c.Available.Equals("t")).Count() > 0;
+}
+
+<div class="container" style="margin-top: 80px; margin-bottom: 20px;">
+    <h1>@Model.Name (@Model.Price p/d)</h1>
+    <hr />
+    <div class="row">
+        <div class="col-sm-6 col-md-3 text-left">
+            <i class="fa fa-users"></i> Guests: @Model.GuestsIncluded
+        </div>
+        <div class="col-sm-6 col-md-3 text-left">
+            <i class="fa fa-bed"></i> Bedrooms: @Model.Bedrooms
+        </div>
+        <div class="col-sm-6 col-md-3 text-left">
+            <i class="fa fa-bed"></i> Beds: @Model.Beds (@Model.BedType)
+        </div>
+        <div class="col-sm-6 col-md-3 text-left">
+            <i class="fa fa-bathtub"></i> Bathrooms: @Model.Bathrooms
+        </div>
+    </div>
+    <hr /><br />
+    <div class="row">
+        <div class="col-sm-12 col-md-7 col-lg-8">
+            <img src="@Model.PictureUrl" alt="Listing @Model.Id preview image" style="width: 100%" />
+            @if (!string.IsNullOrEmpty(Model.Description))
+            {
+                <h3>@Html.DisplayNameFor(x => x.Description)</h3>
+                <p>@Html.Raw(Model.Description)</p>
+                <br /><hr /><br />
+            }
+            @if (!string.IsNullOrEmpty(Model.Space))
+            {
+                <h3>@Html.DisplayNameFor(x => x.Space)</h3>
+                <p>@Html.Raw(Model.Space)</p>
+                <br /><hr /><br />
+            }
+            @if (!string.IsNullOrEmpty(Model.HouseRules))
+            {
+                <h3>@Html.DisplayNameFor(x => x.HouseRules)</h3>
+                <p>@Html.Raw(Model.HouseRules)</p>
+                <br /><hr /><br />
+            }
+            <h3>Location</h3>
+            <div id="map" style="width: 100%; height: 400px;"></div>
+            <br /><hr /><br />
+            <h3>Reviews (@Model.NumberOfReviews)</h3>
+
+            @foreach (var review in Model.Reviews.OrderByDescending(x => x.Date).Take(20))
+            {
+                <div>
+                    <br />
+                    <h4>Review by: @review.ReviewerName</h4>
+                    <p>@review.Comments</p>
+                </div>
+            }
+        </div>
+        <div class="col-sm-12 col-md-5 col-lg-4">
+            <a class="btn btn-primary" style="display: block; width: 100%; text-align: center!important;" href="@Model.ListingUrl" target="_blank">View on AirBNB</a>
+            <br /><hr /><br />
+            <a class="btn btn-light" style="display: block; width: 100%; text-align: center!important;" asp-controller="Host" asp-action="Details" asp-route-id="@Model.HostId">View host details</a>
+            <br /><hr /><br />
+            <h3>Pricing</h3>
+            <ul>
+                <li>@Html.DisplayNameFor(x => x.Price): @Model.Price</li>
+                @if (!string.IsNullOrEmpty(Model.WeeklyPrice))
+                {
+                    <li>@Html.DisplayNameFor(x => x.WeeklyPrice): @Model.WeeklyPrice</li>
+                }
+                @if (!string.IsNullOrEmpty(Model.MonthlyPrice))
+                {
+                    <li>@Html.DisplayNameFor(x => x.MonthlyPrice): @Model.MonthlyPrice</li>
+                }
+                @if (!string.IsNullOrEmpty(Model.SecurityDeposit))
+                {
+                    <li>@Html.DisplayNameFor(x => x.SecurityDeposit): @Model.SecurityDeposit</li>
+                }
+                @if (!string.IsNullOrEmpty(Model.CleaningFee))
+                {
+                    <li>@Html.DisplayNameFor(x => x.CleaningFee): @Model.CleaningFee</li>
+                }
+                @if (!string.IsNullOrEmpty(Model.ExtraPeople))
+                {
+                    <li>@Html.DisplayNameFor(x => x.ExtraPeople): @Model.ExtraPeople</li>
+                }
+            </ul>
+            <br /><hr /><br />
+            @if (availableInCalendar)
+            {
+                <h3>Availability</h3>
+                <canvas id="AvailabilityChart"></canvas>
+                <br /><hr /><br />
+            }
+            <h3>Rating</h3>
+            @if (Model.ReviewScoresAccuracy.HasValue)
+            {
+                <span>Accuracy:</span><br />
+                <span>
+                    @for (int i = 0; i < Model.ReviewScoresAccuracy.Value; i++)
+                    {<i class="material-icons" style="color: #FFC049">star</i>}
+                </span><br /><br />
+            }
+            @if (Model.ReviewScoresCheckin.HasValue)
+            {
+                <span>Checkin:</span><br />
+                <span>
+                    @for (int i = 0; i < Model.ReviewScoresCheckin.Value; i++)
+                    {<i class="material-icons" style="color: #FFC049">star</i>}
+                </span><br /><br />
+            }
+            @if (Model.ReviewScoresCleanliness.HasValue)
+            {
+                <span>Cleanliness:</span><br />
+                <span>
+                    @for (int i = 0; i < Model.ReviewScoresCleanliness.Value; i++)
+                    {<i class="material-icons" style="color: #FFC049">star</i>}
+                </span><br /><br />
+            }
+            @if (Model.ReviewScoresCommunication.HasValue)
+            {
+                <span>Communication:</span><br />
+                <span>
+                    @for (int i = 0; i < Model.ReviewScoresCommunication.Value; i++)
+                    {<i class="material-icons" style="color: #FFC049">star</i>}
+                </span><br /><br />
+            }
+            @if (Model.ReviewScoresLocation.HasValue)
+            {
+                <span>Location:</span><br />
+                <span>
+                    @for (int i = 0; i < Model.ReviewScoresLocation.Value; i++)
+                    {<i class="material-icons" style="color: #FFC049">star</i>}
+                </span><br /><br />
+            }
+            @if (Model.ReviewScoresValue.HasValue)
+            {
+                <span>Value:</span><br />
+                <span>
+                    @for (int i = 0; i < Model.ReviewScoresValue.Value; i++)
+                    {<i class="material-icons" style="color: #FFC049">star</i>}
+                </span><br /><br />
+            }
+            <br /><hr /><br />
+            <h3>Guest requirements</h3>
+            <div class="row">
+                <div class="col-9">
+                    Guest requires profilepicture:
+                </div>
+                <div class="col-3">
+                    @(Model.RequireGuestProfilePicture.Equals("t") ? Html.Raw("<i class=\"material-icons\" style=\"color: #11B213;\">check</i>") : Html.Raw("<i class=\"material-icons\" style=\"color: #B20600;\">close</i>"))
+                </div>
+                <div class="col-9">
+                    Guest requires phonevalidation:
+                </div>
+                <div class="col-3">
+                    @(Model.RequireGuestPhoneVerification.Equals("t") ? Html.Raw("<i class=\"material-icons\" style=\"color: #11B213;\">check</i>") : Html.Raw("<i class=\"material-icons\" style=\"color: #B20600;\">close</i>"))
+                </div>
+            </div>
+            <br /><hr /><br />
+            <h3>@Html.DisplayNameFor(x => x.Amenities)</h3>
+            <ul>
+                @foreach (var x in Model.Amenities.Replace("{", "").Replace("}", "").Replace("\"", "").Split(","))
+                {
+                    <li>@x</li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+@if (availableInCalendar)
+{
+    <script>
+    var AvailabilityChart = new Chart(document.getElementById("AvailabilityChart"), {
+        type: 'horizontalBar',
+        data: {
+            labels: @Json.Serialize(availability.Select(x => x.Month).ToArray()),
+            datasets: [{
+                data: @Json.Serialize(availability.Select(x => x.DaysAvailable).ToArray()),
+                backgroundColor: '#FF5A60'
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            legend: {
+                display: false
+            }
+        }
+    });
+    </script>
+}
+
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1Ijoic2FuZGVydGV1bmlzc2VuIiwiYSI6ImNqZ2U0bDM4azN3aXAyem9oemJ5Y25oMWsifQ.gpIhONe6MRAETxW-IO4DBg';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v10',
+        center: [@Model.Longitude.ToString().Replace(",","."), @Model.Latitude.ToString().Replace(",", ".")],
+        zoom: 18,
+        minZoom: 18,
+        maxZoom: 18,
+        pitch: 45
+    });
+    var el = document.createElement('span');
+    el.className = 'location-pin';
+
+    new mapboxgl.Marker(el)
+        .setLngLat([@Model.Longitude.ToString().Replace(",","."), @Model.Latitude.ToString().Replace(",", ".")])
+        .addTo(map);
+
+    map.on('load', function () {
+        var layers = map.getStyle().layers;
+
+        var labelLayerId;
+        for (var i = 0; i < layers.length; i++) {
+            if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
+                labelLayerId = layers[i].id;
+                break;
+            }
+        }
+
+        map.addLayer({
+            'id': '3d-buildings',
+            'source': 'composite',
+            'source-layer': 'building',
+            'filter': ['==', 'extrude', 'true'],
+            'type': 'fill-extrusion',
+            'minzoom': 15,
+            'paint': {
+                'fill-extrusion-color': '#aaa',
+                'fill-extrusion-height': [
+                    "interpolate", ["linear"], ["zoom"],
+                    15, 0,
+                    15.05, ["get", "height"]
+                ],
+                'fill-extrusion-base': [
+                    "interpolate", ["linear"], ["zoom"],
+                    15, 0,
+                    15.05, ["get", "min_height"]
+                ],
+                'fill-extrusion-opacity': .6
+            }
+        }, labelLayerId);
+    });
+</script>
+
+@section PageSpecificHeaderItems{
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.js'></script>
+    <script src="/lib/chartjs/Chart.js"></script>
+}

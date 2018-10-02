@@ -1,0 +1,17 @@
+﻿@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <form asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="account-box">
+        <a href="#" class="account-button" onclick="document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out" aria-hidden="true"></i> Log out</a>
+        <span class="account-button">Hello @UserManager.GetUserName(User)!</span>
+    </form>
+}
+else
+{
+    <section class="account-box">
+        <a asp-controller="Account" asp-action="Register" class="account-button"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a>
+        <a asp-controller="Account" asp-action="Login" class="account-button"><i class="fa fa-sign-in" aria-hidden="true"></i> Log in</a>
+    </section>
+}

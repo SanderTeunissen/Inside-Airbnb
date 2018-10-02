@@ -1,0 +1,53 @@
+﻿@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManagers
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>@ViewData["Title"] - InsideAirBNB</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
+        <link rel="stylesheet" href="~/css/style.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap-grid.css" />
+        <script src="~/lib/jquery/jquery.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/js/bootstrap.js" asp-append-version="true"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="~/css/style.min.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap-grid.min.css" />
+        <script src="~/lib/jquery/jquery.min.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/js/bootstrap.min.js" asp-append-version="true"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    </environment>
+
+    @RenderSection("PageSpecificHeaderItems", required: false)
+</head>
+<body>
+    <a asp-controller="Home" asp-action="Index" class="item brand-box">
+        <img src="~/images/icons/airbnb_icon_40x40.png" alt="AirBNB icon" class="brand-icon" />
+        <h1 class="brand-name">Inside AirBNB</h1>
+    </a>
+
+    <nav class="navigation">
+        <a class="nav-button" asp-controller="Home" asp-action="Index"><i class="material-icons">home</i> Home</a>
+        <a class="nav-button" asp-controller="Home" asp-action="About"><i class="material-icons">info</i> About</a>
+        <a class="nav-button" asp-controller="Listing" asp-action="MapOverview"><i class="material-icons">map</i> Overview</a>
+    </nav>
+
+    @await Html.PartialAsync("_LoginPartial")
+
+    <section class="copyright-bottom">
+        &copy;@DateTime.Now.Year Copyright: Inside AirBNB
+    </section>
+
+    @RenderBody()
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

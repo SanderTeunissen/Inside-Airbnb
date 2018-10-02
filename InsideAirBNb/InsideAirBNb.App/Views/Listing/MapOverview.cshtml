@@ -1,0 +1,110 @@
+﻿@model MapOverviewVM
+@{
+    ViewData["Title"] = "Map overview AirBNB listings in Amsterdam";
+}
+
+<section id="mapbox" class="map"></section>
+<form id="filter-options" class="item" style="display: none;">
+    <h4 style="text-align:center;">Filter options</h4>
+    <label for="minPrice">Minimum price:</label>
+    <input type="number" class="filter-input" name="minPrice" id="minPrice" min="0" value="@Model.Filter.MinPrice" />
+    <label for="maxPrice">Maximum price:</label>
+    <input type="number" class="filter-input" name="maxPrice" id="maxPrice" min="0" value="@Model.Filter.MaxPrice" />
+    <label for="nrOfReviews">Nr of reviews:</label>
+    <input type="number" class="filter-input" name="nrOfReviews" id="nrOfReviews" min="0" value="@Model.Filter.NrOfReviews" />
+    <label for="neighbourhoodName">Neighboorhood:</label>
+    <select class="filter-input" name="neighbourhoodName" id="neighbourhoodName">
+        <option value="">All</option>
+        @foreach (var n in Model.Neighbourhoods)
+        {
+            if (!string.IsNullOrEmpty(Model.Filter.NeighbourhoodName) && n.Name.ToLower() == Model.Filter.NeighbourhoodName.ToLower())
+            {
+                <option value="@n.Name" selected="selected">@n.Name</option>
+            }
+            else
+            {
+                <option value="@n.Name">@n.Name</option>
+            }
+        }
+    </select>
+    <section class="filter-options-control">
+        <button type="submit" class="btn btn-primary">Apply filter</button>
+        <a class="btn btn-light" asp-controller="Listing" asp-action="MapOverview">Remove filter</a>
+    </section>
+</form>
+<section class="cards-dock">
+    <button id="filter-options-button" class="btn btn-primary" style="margin: 20px; padding: 10px;"><i class="material-icons" style="color: #FFFFFF; font-size: 20px; margin: 5px;">settings</i></button>
+    @{await Html.RenderPartialAsync("./Statistics/RoomTypes.cshtml", new RoomTypesVM(Model.FilteredListings));}
+    @{await Html.RenderPartialAsync("./Statistics/ActivityDetails.cshtml", new ActivityDetailsVM(Model.FilteredListings));}
+    @{await Html.RenderPartialAsync("./Statistics/AvailabilityDetails.cshtml", new AvailabilityDetailsVM(Model.FilteredListings));}
+    @{await Html.RenderPartialAsync("./Statistics/HostListings.cshtml", new HostListingsVM(Model.FilteredListings));}
+</section>
+
+<script>
+    $(document).ready(function () {
+        $("#filter-options-button").click(function () {
+            $("#filter-options").fadeToggle()
+        });
+    });
+</script>
+
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1Ijoic2FuZGVydGV1bmlzc2VuIiwiYSI6ImNqZ2U0bDM4azN3aXAyem9oemJ5Y25oMWsifQ.gpIhONe6MRAETxW-IO4DBg';
+    var map = new mapboxgl.Map({
+        container: 'mapbox',
+        style: 'mapbox://styles/mapbox/streets-v10',
+        center: [4.898, 52.366],
+        zoom: 12,
+        minZoom: 10,
+        maxZoom: 20
+    });
+
+    map.on('load', function () {
+        map.addSource("listings", {
+            type: "geojson",
+            data: @Json.Serialize(Model.GeoJson)
+        });
+
+        map.addLayer({
+            id: "listing-points",
+            type: "circle",
+            source: "listings",
+            filter: ["!has", "point_count"],
+            paint: {
+                "circle-color": { "type": "identity", "property": "backgroundColor" },
+                "circle-radius": 6,
+                "circle-stroke-width": 1,
+                "circle-stroke-color": "#fff"
+            }
+        });
+
+        map.on('click', 'listing-points', function (e) {
+            var coordinates = e.features[0].geometry.coordinates.slice();
+            var description = e.features[0].properties.description;
+
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+
+            new mapboxgl.Popup()
+                .setLngLat(coordinates)
+                .setHTML(description)
+                .addTo(map);
+        });
+
+        map.on('mouseenter', 'listing-points', function () {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        map.on('mouseleave', 'listing-points', function () {
+            map.getCanvas().style.cursor = '';
+        });
+
+    });
+</script>
+
+@section PageSpecificHeaderItems{
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.js'></script>
+    <script src="/lib/chartjs/Chart.js"></script>
+}

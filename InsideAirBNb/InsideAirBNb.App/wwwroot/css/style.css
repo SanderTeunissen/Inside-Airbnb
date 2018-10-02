@@ -1,0 +1,498 @@
+﻿:root {
+    --primary: #fd5c63;
+    --primary-hover: #E35359;
+    --secondary: #008489;
+    --secondary-hover: #006B6F;
+    --success: #6ECA35;
+    --success-hover: #60B02E;
+    --info: #17a2b8;
+    --info-hover: #148C9E;
+    --warning: #FDFA75;
+    --warning-hover: #E3E169;
+    --danger: #B02F34;
+    --danger-hover: #96282C;
+    --light: #f8f9fa;
+    --light-hover: #DFE0E0;
+    --dark: #343a40;
+    --dark-hover: #343a40;
+    --shadow-light: #E5E5E5;
+    --shadow: #BFBFBF;
+    --shadow-dark: #7F7F7F;
+    --background: #FFFFFF;
+    --text: #212529;
+    --text-light: #FFFFFF;
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --box-shadow-1-layer: 0px 0px 10px var(--shadow-dark);
+    --box-shadow-2-layer: 0px 0px 20px var(--shadow);
+    --box-shadow-3-layer: 0px 0px 30px var(--shadow);
+    --box-shadow-4-layer: 0px 0px 40px var(--shadow);
+    --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: sans-serif;
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -ms-overflow-style: scrollbar;
+    -webkit-tap-highlight-color: transparent;
+}
+
+@-ms-viewport {
+    width: device-width;
+}
+
+article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+    display: block;
+}
+
+input, button, submit, select {
+    border: none;
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+}
+
+input{
+    background: none;
+}
+
+input:focus, button:focus, submit:focus, select:focus {
+    outline: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0.5rem;
+    margin-bottom: 0.2rem;
+    color: var(--primary) !important;
+}
+
+hr {
+    height: 1px;
+    background-color: #CCCCCC;
+    color: #CCCCCC;
+    border: 0 none;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text);
+    text-align: left;
+    background-image: url('../images/background/background_triangle.svg');
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
+a{
+    color: var(--text);
+    text-decoration: none;
+}
+
+a *{
+    color: var(--text);
+    text-decoration: none;
+}
+
+.text-danger{
+    color: var(--danger);
+}
+
+.item {
+    background-color: var(--background);
+    border-radius: 15px;
+    box-shadow: var(--box-shadow-1-layer);
+}
+
+.item-inline {
+    display: inline-block;
+    margin: 20px;
+}
+
+.item-chart {
+    width: 300px;
+    padding: 15px;
+}
+
+.item-chart-large {
+    width: 500px;
+    padding: 15px;
+}
+
+.item.brand-box {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 5px 1rem;
+    z-index: 2;
+}
+
+.brand-name {
+    display: inline-block;
+    font-size: 1.4rem;
+    margin: 0;
+    margin-left: 0.5rem;
+    padding: 0;
+    line-height: inherit;
+    white-space: nowrap;
+    color: var(--text) !important;
+    text-decoration: none;
+    font-weight: inherit;
+}
+
+.brand-name:hover, .brand-name:focus {
+    text-decoration: none;
+}
+
+.brand-icon {
+    height: 34px;
+    margin: 3px 0;
+}
+
+.navigation {
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    z-index: 2;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.nav-button {
+    display: flex;
+    background-color: var(--primary);
+    padding: 10px 20px;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 17px;
+    box-shadow: var(--box-shadow-1-layer);
+    cursor: pointer;
+    align-items: center;
+    font-weight: 500;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.nav-button:hover {
+    background-color: var(--primary-hover);
+}
+
+.nav-button > i {
+    margin-right: 0.5rem;
+    color: #FFFFFF;
+}
+
+.account-box {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 2;
+}
+
+.account-button {
+    display: inline-flex;
+    background-color: var(--background);
+    padding: 10px 20px;
+    color: var(--text);
+    margin-bottom: 20px;
+    margin-right: 20px;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 17px;
+    box-shadow: var(--box-shadow-1-layer);
+    cursor: pointer;
+    align-items: center;
+    font-weight: 500;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.account-button:hover {
+    background-color: #F4F4F4;
+}
+
+.account-button > i {
+    margin-right: 0.5rem;
+}
+
+.copyright-bottom {
+    position: fixed;
+    left: 3px;
+    bottom: 1px;
+    font-size: 11px;
+    z-index: 2;
+}
+
+.bottom-item-row {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.bottom-item-row-center {
+    display: flex;
+    justify-content: space-around;
+}
+
+.front-page-link-chart {
+    width: 500px;
+    height: 250px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 2em;
+    font-weight: 500;
+}
+
+.front-page-link-chart > span {
+    background-color: var(--primary);
+    color: #FFFFFF;
+    width: 100%;
+    padding: 5px 0;
+    border-radius: 0 0 15px 15px;
+    text-align: center;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.front-page-link-chart:hover > span {
+    background-color: var(--primary-hover);
+}
+
+.front-page-link-chart-map {
+    background-image: url('../images/background/amsterdam_chart.jpg');
+}
+
+.front-page-link-chart-listing {
+    background-image: url('../images/background/airbnb_listing.jpg');
+}
+
+.front-page-link-chart-host {
+    background-image: url('../images/background/airbnb_host.jpg');
+}
+
+.main-content {
+    margin-top: 82px;
+    margin-left: 50px;
+    max-width: calc(100vw - 250px);
+}
+
+.form-obj {
+    display: flex;
+}
+
+.form-obj > *{
+    margin-right: 5px;
+}
+
+.form-input{
+    width: 100%;
+}
+
+.map {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+
+
+
+
+.btn {
+    display: inline-flex;
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 17px;
+    box-shadow: var(--box-shadow-1-layer);
+    cursor: pointer;
+    align-items: center;
+    font-weight: 500;
+    transition: 0.3s ease-in-out;
+}
+
+.btn:active {
+    box-shadow: none;
+}
+
+.btn-primary {
+    color: var(--text-light);
+    background-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-light {
+    color: var(--text);
+    background-color: var(--light);
+}
+
+.btn-light:hover {
+    background-color: var(--light-hover);
+}
+
+.card-item {
+    display: block;
+    padding: 10px;
+    margin: 20px;
+    background-color: var(--background);
+    border-radius: 15px;
+    box-shadow: var(--box-shadow-1-layer);
+}
+
+.card-item-20 {
+    width: 20%;
+    max-height: 80vh;
+    padding: 10px;
+    margin: 20px;
+    background-color: var(--background);
+    border-radius: 15px;
+    box-shadow: var(--box-shadow-1-layer);
+    transition: height 0.5s ease-in-out;
+}
+
+.card-item-img {
+    width: 100%;
+}
+
+.card-opener{
+    cursor: pointer;
+}
+
+.card-item-title {
+    color: var(--primary);
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+}
+
+.card-item-content-hidden{
+    display: none;
+}
+
+.location-pin {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    margin-left: -115px;
+    border-radius: 50% 50% 50% 0;
+    border: 4px solid #FF5A60;
+    width: 20px;
+    height: 20px;
+}
+
+.location-pin::after {
+    position: absolute;
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    margin-left: -5px; 
+    margin-top: -5px;
+    background-color: #FF5A60;
+}
+
+.cards-dock{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+.stat-value{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.stat-value > small{
+    font-size: 15px;
+    font-weight: bold;
+    display: block;
+}
+
+.stat-value > small:before{
+    content: '(';
+}
+
+.stat-value > small:after{
+    content: ')';
+}
+
+.stat-value-lable{
+    font-size: 13px;
+    font-weight: lighter;
+}
+
+#filter-options{
+    position: fixed;
+    left: 20px;
+    bottom: 90px;
+    width: 350px;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 15px 0;
+}
+
+#filter-options label{
+    margin-left: 25px;
+}
+
+.filter-input {
+    padding: 10px 5px 10px 20px;
+    margin: 10px;
+    font-weight: 400;
+    font-size: 15px;
+    border-radius: 17px;
+    background-color: var(--shadow-light);
+    border-radius: 15px;
+}
+
+.filter-options-control{
+    display: flex;
+    justify-content: space-around;
+}

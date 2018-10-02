@@ -1,0 +1,61 @@
+﻿@model HostListingsVM
+
+<article id="RoomTypesStatsCard" class="card-item-20">
+    <span id="card-opener-hostlisting" class="card-opener" style="float:right;"><i class="material-icons">keyboard_arrow_up</i></span>
+    <span class="card-item-title text-center">Listings per Host</span>
+    <section id="HostListingStatsCardContent" class="card-item-content-hidden">
+        <hr />
+        <p>Some Airbnb hosts have multiple listings.</p>
+        <p>A host may list separate rooms in the same apartment, or multiple apartments or homes available in their entirity.</p>
+        <p>Hosts with multiple listings are more likely to be running a business, are unlikely to be living in the property, and in violation of most short term rental laws designed to protect residential housing.</p>
+        <canvas id="HostListingsChart"></canvas>
+        <div class="row">
+            <div class="col-sm-6 text-center stat-value">
+                @Model.HostSingleListingPerc%
+                <small>@Model.HostSingleListing</small>
+            </div>
+            <div class="col-sm-6 text-center stat-value">
+                @Model.HostMultipleListingsPerc%
+                <small>@Model.HostMultipleListings</small>
+            </div>
+            <div class="col-sm-6 text-center stat-value-lable">
+                Host with single listing
+            </div>
+            <div class="col-sm-6 text-center stat-value-lable">
+                Host with multiple listings
+            </div>
+        </div>
+    </section>
+</article>
+
+<script>
+    $(document).ready(function () {
+        $("#card-opener-hostlisting").click(function () {
+            $("#HostListingStatsCardContent").fadeToggle()
+        });
+    });
+
+    var NrListingTypesChart = new Chart(document.getElementById("HostListingsChart"), {
+        type: 'horizontalBar',
+        data: {
+            labels: ['Single listing','Multiple listings'],
+            datasets: [{
+                data: [@Model.HostSingleListing,@Model.HostMultipleListings],
+                backgroundColor: ['#FF5A60', '#3494CC'],
+                label: 'Nr of listings'
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            legend: {
+                display: false
+            }
+        }
+    });
+</script>

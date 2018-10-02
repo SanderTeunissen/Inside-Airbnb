@@ -1,0 +1,55 @@
+﻿@model AvailabilityDetailsVM
+
+<article id="RoomTypesStatsCard" class="card-item-20">
+    <span id="card-opener-roomavailability" class="card-opener" style="float:right;"><i class="material-icons">keyboard_arrow_up</i></span>
+    <span class="card-item-title text-center">Room availability</span>
+    <section id="RoomAvailabilityStatsCardContent" class="card-item-content-hidden">
+        <hr />
+        <p>An Airbnb host can setup a calendar for their listing so that it is only available for a few days or weeks a year.</p>
+        <p>Other listings are available all year round (except for when it is already booked).</p>
+        <p>Entire homes or apartments highly available year-round for tourists, probably don't have the owner present, could be illegal, and more importantly, are displacing residents.</p>
+        <canvas id="ListingAvailabilityChart"></canvas>
+        <div class="row">
+            <div class="col-sm-6 text-center stat-value">
+                @Model.HighAvailablePerc%
+                <small>@Model.HighAvailable</small>
+            </div>
+            <div class="col-sm-6 text-center stat-value">
+                @Model.LowAvailablePerc%
+                <small>@Model.LowAvailable</small>
+            </div>
+            <div class="col-sm-6 text-center stat-value-lable">
+                high availability <br /> (>60 days a year)
+            </div>
+            <div class="col-sm-6 text-center stat-value-lable">
+                low availability <br /> (<=60 days a year)
+            </div>
+        </div>
+    </section>
+</article>
+
+<script>
+    var ListingAvailabilityChart = new Chart(document.getElementById("ListingAvailabilityChart"), {
+        type: 'doughnut',
+        data: {
+            labels: ["Nr of listings > 60 days available", "Nr of listings =< 60 days available"],
+            datasets: [{
+                data: [@Model.HighAvailable, @Model.LowAvailable],
+                backgroundColor: ["#FF5A60","#3494CC"]
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            }
+        }
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#card-opener-roomavailability").click(function () {
+            $("#RoomAvailabilityStatsCardContent").fadeToggle()
+        });
+    });
+</script>

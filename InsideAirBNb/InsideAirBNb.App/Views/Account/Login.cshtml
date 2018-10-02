@@ -1,0 +1,67 @@
+﻿@using System.Linq
+@model LoginViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    ViewData["Title"] = "Log in";
+    var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+}
+
+<section class="main-content">
+    <h1 class="text-airbnb">Inside AirBNB log in</h1>
+    <hr />
+    <div class="row">
+        <div class="col-sm-12 col-md-5">
+            <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                <h3>Use a local account to log in.</h3>
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-grp">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <div class="form-obj">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-input" />
+                    </div>
+                    <hr />
+                </div>
+                <div class="form-grp">
+                    <br />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <div class="form-obj">
+                        <label asp-for="Password"></label>
+                        <input asp-for="Password" class="form-input" />
+                    </div>
+                    <hr />
+                </div>
+                <div class="form-grp">
+                    <div class="checkbox">
+                        <label asp-for="RememberMe">
+                            <input asp-for="RememberMe" />
+                            @Html.DisplayNameFor(m => m.RememberMe)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-grp">
+                    <button type="submit" class="btn btn-primary" style="float: right;">Log in</button><br /><br /><br />
+                    <a asp-action="ForgotPassword" class="btn btn-light" style="float: right;">Forgot your password?</a>
+                    <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" class="btn btn-light" style="float: right;">Register as a new user?</a>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-12 col-md-7">
+            <h3>Use another service to log in.</h3>
+            <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+                <div>
+                    <p>
+                        @foreach (var provider in loginProviders)
+                        {
+                            <button type="submit" class="btn btn-light" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.Name</button>
+                        }
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

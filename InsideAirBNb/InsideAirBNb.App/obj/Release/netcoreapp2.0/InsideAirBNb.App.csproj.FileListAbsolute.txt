@@ -1,0 +1,12 @@
+C:\Users\Sander\Documents\GC_AirBNB\InsideAirBNb\InsideAirBNb.App\bin\Release\netcoreapp2.0\InsideAirBNb.App.deps.json
+C:\Users\Sander\Documents\GC_AirBNB\InsideAirBNb\InsideAirBNb.App\bin\Release\netcoreapp2.0\InsideAirBNb.App.runtimeconfig.json
+C:\Users\Sander\Documents\GC_AirBNB\InsideAirBNb\InsideAirBNb.App\bin\Release\netcoreapp2.0\InsideAirBNb.App.runtimeconfig.dev.json
+C:\Users\Sander\Documents\GC_AirBNB\InsideAirBNb\InsideAirBNb.App\bin\Release\netcoreapp2.0\InsideAirBNb.App.dll
+C:\Users\Sander\Documents\GC_AirBNB\InsideAirBNb\InsideAirBNb.App\bin\Release\netcoreapp2.0\InsideAirBNb.App.pdb
+C:\Users\Sander\Documents\GC_AirBNB\InsideAirBNb\InsideAirBNb.App\obj\Release\netcoreapp2.0\InsideAirBNb.App.csprojAssemblyReference.cache
+C:\Users\Sander\Documents\GC_AirBNB\InsideAirBNb\InsideAirBNb.App\obj\Release\netcoreapp2.0\InsideAirBNb.App.csproj.CoreCompileInputs.cache
+C:\Users\Sander\Documents\GC_AirBNB\InsideAirBNb\InsideAirBNb.App\obj\Release\netcoreapp2.0\InsideAirBNb.App.AssemblyInfoInputs.cache
+C:\Users\Sander\Documents\GC_AirBNB\InsideAirBNb\InsideAirBNb.App\obj\Release\netcoreapp2.0\InsideAirBNb.App.AssemblyInfo.cs
+C:\Users\Sander\Documents\GC_AirBNB\InsideAirBNb\InsideAirBNb.App\obj\Release\netcoreapp2.0\InsideAirBNb.App.dll
+C:\Users\Sander\Documents\GC_AirBNB\InsideAirBNb\InsideAirBNb.App\obj\Release\netcoreapp2.0\InsideAirBNb.App.pdb
+C:\Users\Sander\Documents\GC_AirBNB\InsideAirBNb\InsideAirBNb.App\obj\Release\netcoreapp2.0\UserSecretsAssemblyInfo.cs

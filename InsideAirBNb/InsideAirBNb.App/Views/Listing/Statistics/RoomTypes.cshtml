@@ -1,0 +1,45 @@
+﻿@model RoomTypesVM
+
+<article id="RoomTypesStatsCard" class="card-item-20">
+    <span id="card-opener-roomtype" class="card-opener" style="float:right;"><i class="material-icons">keyboard_arrow_up</i></span>
+    <span class="card-item-title text-center">Room types</span>
+    <section id="RoomTypesStatsCardContent" class="card-item-content-hidden">
+        <hr />
+        <p>Airbnb hosts can list entire homes/apartments, private or shared rooms.</p>
+        <canvas id="NrListingTypesChart"></canvas>
+    </section>
+</article>
+
+<script>
+    var NrListingTypesChart = new Chart(document.getElementById("NrListingTypesChart"), {
+        type: 'horizontalBar',
+        data: {
+            labels: @Json.Serialize(Model.RoomTypeLabels),
+            datasets: [{
+                data: @Json.Serialize(Model.RoomTypeValues),
+                backgroundColor: @Json.Serialize(Model.RoomTypeColors),
+                label: 'Nr of listings'
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            legend: {
+                display: false
+            }
+        }
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#card-opener-roomtype").click(function () {
+            $("#RoomTypesStatsCardContent").fadeToggle()
+        });
+    });
+</script>
